@@ -741,13 +741,20 @@
     function renderGrouped(items, colList) {
       if (!items || items.length === 0) { showState('empty'); return; }
 
-      const colMap = new Map();
-      (colList || []).forEach(c => colMap.set(c.id, c));
+      console.log('[Vacuole Share] collections:', JSON.stringify(colList));
+      console.log('[Vacuole Share] items sample:', JSON.stringify(items[0]));
+      console.log('[Vacuole Share] item collection_id:', items[0]?.collection_id, '| type:', typeof items[0]?.collection_id);
+      console.log('[Vacuole Share] first collection id:', colList?.[0]?.id, '| type:', typeof colList?.[0]?.id);
 
-      // Group items by collection_id
+      // Use String() on both sides — collection_id from wishlists and id from collections
+      // must be compared as the same type (both are UUIDs but JS types can differ).
+      const colMap = new Map();
+      (colList || []).forEach(c => colMap.set(String(c.id), c));
+
+      // Group items by collection_id (string-coerced so Map keys match colMap keys)
       const groups = new Map();
       items.forEach(item => {
-        const key = item.collection_id || '__none__';
+        const key = item.collection_id != null ? String(item.collection_id) : '__none__';
         if (!groups.has(key)) groups.set(key, []);
         groups.get(key).push(item);
       });
@@ -758,11 +765,14 @@
       //      (RLS may have blocked the collections fetch — items still need to show)
       //   3. Uncategorized always last
       const orderedKeys = [];
-      (colList || []).forEach(c => { if (groups.has(c.id)) orderedKeys.push(c.id); });
+      (colList || []).forEach(c => { if (groups.has(String(c.id))) orderedKeys.push(String(c.id)); });
       groups.forEach((_, key) => {
         if (key !== '__none__' && !orderedKeys.includes(key)) orderedKeys.push(key);
       });
       if (groups.has('__none__')) orderedKeys.push('__none__');
+
+      console.log('[Vacuole Share] orderedKeys:', orderedKeys);
+      console.log('[Vacuole Share] groups keys:', [...groups.keys()]);
 
       // Update header meta: "X items across Y collections"
       const totalItems  = items.length;
@@ -888,9 +898,12 @@
           collectionName.textContent   = `${displayName}'s Wishlist`;
 
           // Fetch all items + collections in parallel
+          console.log('[Vacuole Share] fetching items + collections for user_id:', share.user_id);
           const [items, collections] = await Promise.all([
             supaFetch(`wishlists?user_id=eq.${encodeURIComponent(share.user_id)}&select=title,url,image,domain,price,collection_id&order=saved_at.desc`),
-            supaFetch(`collections?user_id=eq.${encodeURIComponent(share.user_id)}&select=id,name,color&order=created_at.asc`).catch(() => [])
+            supaFetch(`collections?user_id=eq.${encodeURIComponent(share.user_id)}&select=id,name,color&order=created_at.asc`)
+              .then(rows => { console.log('[Vacuole Share] collections fetch OK — rows:', JSON.stringify(rows)); return rows; })
+              .catch(err => { console.warn('[Vacuole Share] collections fetch FAILED:', err.message); return []; })
           ]);
 
           const count      = (items || []).length;
