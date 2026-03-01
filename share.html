@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO meta tags — updated dynamically -->
+  <title>Wishlist — Vacuole</title>
+  <meta name="description" content="Curated products saved with Vacuole">
+  <meta property="og:title" content="Wishlist — Vacuole">
+  <meta property="og:description" content="Curated products saved with Vacuole">
+  <meta property="og:image" content="">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <style>
+    :root {
+      --cream: #E8E3D0;
+      --card: #F2EDE0;
+      --sage: #B8C4B0;
+      --charcoal: #2C2C2A;
+      --text-light: #6B6B68;
+      --border-light: #D4CFBE;
+      --price-green: #4A6741;
+      --shadow: 0 2px 8px rgba(44, 44, 42, 0.08);
+      --shadow-lg: 0 8px 24px rgba(44, 44, 42, 0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      background-color: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+      border-top: 3px solid var(--sage);
+      min-height: 100vh;
+      padding-bottom: 6rem; /* room for sticky banner */
+    }
+
+    /* ─── NAV ────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(232, 227, 208, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-light);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      flex-shrink: 0;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────── */
+    .page-header {
+      max-width: 1100px;
+      margin: 2.5rem auto 0;
+      padding: 0 1.5rem;
+    }
+
+    .collection-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .collection-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--sage);
+    }
+
+    .page-header h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--charcoal);
+    }
+
+    .header-meta {
+      margin-top: 0.5rem;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* ─── GRID ───────────────────────────────────────── */
+    .items-grid {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .items-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      .items-grid { grid-template-columns: 1fr; }
+      .page-header h1 { font-size: 1.5rem; }
+    }
+
+    /* ─── ITEM CARD ──────────────────────────────────── */
+    .item-card {
+      background: var(--card);
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .item-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-image-wrap {
+      height: 200px;
+      overflow: hidden;
+      background: #E0DAC8;
+      position: relative;
+    }
+
+    .card-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #DDD8C4, #C8C2AE);
+      font-size: 3rem;
+      font-weight: 700;
+      color: rgba(44, 44, 42, 0.25);
+      letter-spacing: -1px;
+    }
+
+    .card-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.4;
+    }
+
+    .card-domain {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .card-price {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--price-green);
+    }
+
+    .card-footer {
+      padding: 0 1rem 1rem;
+    }
+
+    .btn-view {
+      display: block;
+      width: 100%;
+      padding: 0.6rem 1rem;
+      background: var(--charcoal);
+      color: var(--cream);
+      border: none;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn-view:hover { opacity: 0.85; }
+
+    /* ─── SKELETON ───────────────────────────────────── */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+
+    .skeleton-card {
+      background: var(--card);
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+      overflow: hidden;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    .skeleton-img {
+      height: 200px;
+      background: #DDD8C4;
+    }
+
+    .skeleton-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .skeleton-line {
+      height: 14px;
+      border-radius: 6px;
+      background: #DDD8C4;
+    }
+
+    .skeleton-line.short { width: 50%; }
+    .skeleton-line.price { width: 35%; }
+    .skeleton-btn {
+      height: 36px;
+      border-radius: 8px;
+      background: #DDD8C4;
+      margin: 0.25rem 0 0;
+    }
+
+    /* ─── STATE MESSAGES ─────────────────────────────── */
+    .state-msg {
+      max-width: 480px;
+      margin: 5rem auto;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow);
+    }
+
+    .state-msg .icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .state-msg h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .state-msg p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* ─── CONVERSION BANNER ──────────────────────────── */
+    .cta-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(242, 237, 224, 0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border-light);
+      box-shadow: 0 -4px 20px rgba(44, 44, 42, 0.1);
+      z-index: 500;
+      padding: 0.9rem 1.5rem;
+    }
+
+    .cta-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .cta-text strong {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    .cta-text span {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .cta-btn {
+      background: var(--charcoal);
+      color: var(--cream);
+      padding: 0.65rem 1.4rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: opacity 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .cta-btn:hover { opacity: 0.85; }
+
+    @media (max-width: 560px) {
+      .cta-inner { justify-content: center; text-align: center; }
+    }
+
+    /* ─── GROUPED VIEW ───────────────────────────────── */
+    #grouped-container {
+      max-width: 1100px;
+      margin: 2rem auto 0;
+      padding: 0 1.5rem;
+    }
+
+    .group-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .group-header {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .group-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .group-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      letter-spacing: -0.2px;
+    }
+
+    .group-count {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      background: var(--cream);
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      padding: 2px 10px;
+    }
+
+    .group-divider {
+      border: none;
+      border-top: 1px solid var(--border-light);
+      margin-bottom: 1.25rem;
+    }
+
+    .group-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .group-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      .group-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── HIDDEN ─────────────────────────────────────── */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-brand">Vacuole</a>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header" id="page-header">
+    <div class="collection-title-row">
+      <span class="collection-dot" id="collection-dot"></span>
+      <h1 id="collection-name">Loading…</h1>
+    </div>
+    <p class="header-meta" id="header-meta">&nbsp;</p>
+  </header>
+
+  <!-- LOADING SKELETONS -->
+  <div class="items-grid" id="skeleton-grid">
+    <div class="skeleton-card">
+      <div class="skeleton-img"></div>
+      <div class="skeleton-body">
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line short"></div>
+        <div class="skeleton-line price"></div>
+        <div class="skeleton-btn"></div>
+      </div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skeleton-img"></div>
+      <div class="skeleton-body">
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line short"></div>
+        <div class="skeleton-line price"></div>
+        <div class="skeleton-btn"></div>
+      </div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skeleton-img"></div>
+      <div class="skeleton-body">
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line price"></div>
+        <div class="skeleton-btn"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ITEMS GRID (single collection, populated by JS) -->
+  <div class="items-grid hidden" id="items-grid"></div>
+
+  <!-- GROUPED VIEW (full wishlist, populated by JS) -->
+  <div id="grouped-container" class="hidden"></div>
+
+  <!-- EMPTY STATE -->
+  <div class="state-msg hidden" id="state-empty">
+    <span class="icon">🛍️</span>
+    <h2>This wishlist is empty</h2>
+    <p>No products have been saved to this collection yet.</p>
+  </div>
+
+  <!-- NOT FOUND STATE -->
+  <div class="state-msg hidden" id="state-not-found">
+    <span class="icon">🔍</span>
+    <h2>Wishlist not found</h2>
+    <p>This wishlist link is invalid or has been removed.</p>
+  </div>
+
+  <!-- ERROR STATE -->
+  <div class="state-msg hidden" id="state-error">
+    <span class="icon">⚠️</span>
+    <h2>Something went wrong</h2>
+    <p>Please try again later.</p>
+  </div>
+
+  <!-- CONVERSION BANNER -->
+  <div class="cta-banner" id="cta-banner">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <strong>✨ Save products from any site with one click</strong>
+        <span>Build your own wishlist — free, no account required</span>
+      </div>
+      <a href="#" class="cta-btn">Get Vacuole Free — Chrome Extension</a>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://iwrpgplwttayakvsvbas.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3cnBncGx3dHRheWFrdnN2YmFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxMzQ4NzMsImV4cCI6MjA4NzcxMDg3M30.CHDQZTwOx4iyJpnNHAHo8Lq8DXt9bjpEklbx4WrRW8Q';
+
+    const headers = {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json'
+    };
+
+    // ─── DOM refs ────────────────────────────────────────
+    const skeletonGrid      = document.getElementById('skeleton-grid');
+    const itemsGrid         = document.getElementById('items-grid');
+    const groupedContainer  = document.getElementById('grouped-container');
+    const collectionDot     = document.getElementById('collection-dot');
+    const collectionName    = document.getElementById('collection-name');
+    const headerMeta        = document.getElementById('header-meta');
+    const stateEmpty        = document.getElementById('state-empty');
+    const stateNotFound     = document.getElementById('state-not-found');
+    const stateError        = document.getElementById('state-error');
+
+    function showState(state) {
+      skeletonGrid.classList.add('hidden');
+      itemsGrid.classList.add('hidden');
+      groupedContainer.classList.add('hidden');
+      stateEmpty.classList.add('hidden');
+      stateNotFound.classList.add('hidden');
+      stateError.classList.add('hidden');
+      if (state === 'items')     { itemsGrid.classList.remove('hidden'); }
+      else if (state === 'grouped')   { groupedContainer.classList.remove('hidden'); }
+      else if (state === 'empty')     { stateEmpty.classList.remove('hidden'); }
+      else if (state === 'not-found') { stateNotFound.classList.remove('hidden'); }
+      else if (state === 'error')     { stateError.classList.remove('hidden'); }
+    }
+
+    // ─── Supabase fetch helper ────────────────────────────
+    async function supaFetch(path, opts = {}) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+        ...opts,
+        headers: { ...headers, ...(opts.headers || {}) }
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return (opts.method === 'PATCH' || opts.method === 'DELETE') ? null : res.json();
+    }
+
+    // ─── Helpers ──────────────────────────────────────────
+    function domainInitial(domain) {
+      return (domain || '?').replace(/^www\./, '').charAt(0).toUpperCase();
+    }
+
+    // Preserve existing currency symbols; only add $ when there's a bare number
+    function formatPrice(price) {
+      if (price == null || price === '' || price === 0) return '';
+      const str = String(price).trim();
+      if (!str) return '';
+      if (/[₹$€£¥]/.test(str)) return str;          // already has a symbol
+      const num = parseFloat(str.replace(/[^0-9.]/g, ''));
+      if (isNaN(num) || num === 0) return str;
+      return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function updateMeta(title, description, imageUrl) {
+      document.title = title;
+      document.querySelector('meta[name="description"]').content = description;
+      document.querySelector('meta[property="og:title"]').content = title;
+      document.querySelector('meta[property="og:description"]').content = description;
+      if (imageUrl) document.querySelector('meta[property="og:image"]').content = imageUrl;
+    }
+
+    // ─── Build a single product card ─────────────────────
+    function buildCard(item) {
+      const card = document.createElement('div');
+      card.className = 'item-card';
+
+      const imageWrap = document.createElement('div');
+      imageWrap.className = 'card-image-wrap';
+
+      if (item.image) {
+        const img = document.createElement('img');
+        img.alt     = item.title || '';
+        img.loading = 'lazy';
+        img.src     = item.image;
+        img.addEventListener('error', () => {
+          imageWrap.innerHTML = '';
+          const ph = document.createElement('div');
+          ph.className   = 'card-placeholder';
+          ph.textContent = domainInitial(item.domain);
+          imageWrap.appendChild(ph);
+        });
+        imageWrap.appendChild(img);
+      } else {
+        const ph = document.createElement('div');
+        ph.className   = 'card-placeholder';
+        ph.textContent = domainInitial(item.domain);
+        imageWrap.appendChild(ph);
+      }
+      card.appendChild(imageWrap);
+
+      const body = document.createElement('div');
+      body.className = 'card-body';
+
+      if (item.title) {
+        const t = document.createElement('p');
+        t.className   = 'card-title';
+        t.textContent = item.title;
+        body.appendChild(t);
+      }
+      if (item.domain) {
+        const d = document.createElement('p');
+        d.className   = 'card-domain';
+        d.textContent = item.domain.replace(/^www\./, '');
+        body.appendChild(d);
+      }
+      const price = formatPrice(item.price);
+      if (price) {
+        const pr = document.createElement('p');
+        pr.className   = 'card-price';
+        pr.textContent = price;
+        body.appendChild(pr);
+      }
+      card.appendChild(body);
+
+      const footer = document.createElement('div');
+      footer.className = 'card-footer';
+      const btn = document.createElement('a');
+      btn.className   = 'btn-view';
+      btn.textContent = 'View Product →';
+      btn.href        = item.url || '#';
+      btn.target      = '_blank';
+      btn.rel         = 'noopener noreferrer';
+      footer.appendChild(btn);
+      card.appendChild(footer);
+
+      return card;
+    }
+
+    // ─── Build a collection group section ────────────────
+    function buildGroupSection(col, items) {
+      const section = document.createElement('div');
+      section.className = 'group-section';
+
+      const hdr = document.createElement('div');
+      hdr.className = 'group-header';
+
+      const dot = document.createElement('span');
+      dot.className        = 'group-dot';
+      dot.style.background = col ? col.color : '#D4CFBE';
+      hdr.appendChild(dot);
+
+      const name = document.createElement('span');
+      name.className   = 'group-name';
+      name.textContent = col ? col.name : 'Uncategorized';
+      hdr.appendChild(name);
+
+      const cnt = document.createElement('span');
+      cnt.className   = 'group-count';
+      cnt.textContent = `${items.length} item${items.length !== 1 ? 's' : ''}`;
+      hdr.appendChild(cnt);
+
+      section.appendChild(hdr);
+
+      const divider = document.createElement('hr');
+      divider.className = 'group-divider';
+      section.appendChild(divider);
+
+      const grid = document.createElement('div');
+      grid.className = 'group-grid';
+      items.forEach(item => grid.appendChild(buildCard(item)));
+      section.appendChild(grid);
+
+      return section;
+    }
+
+    // ─── Render grouped wishlist (full-wishlist share) ────
+    function renderGrouped(items, collections) {
+      if (!items || items.length === 0) { showState('empty'); return; }
+
+      const colMap = new Map();
+      (collections || []).forEach(c => colMap.set(c.id, c));
+
+      // Group items by collection_id
+      const groups = new Map();
+      items.forEach(item => {
+        const key = item.collection_id || '__none__';
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(item);
+      });
+
+      // Render named collections in their saved order, then uncategorized last
+      const orderedKeys = [];
+      (collections || []).forEach(c => { if (groups.has(c.id)) orderedKeys.push(c.id); });
+      if (groups.has('__none__')) orderedKeys.push('__none__');
+
+      groupedContainer.innerHTML = '';
+      orderedKeys.forEach(key => {
+        const col = key === '__none__' ? null : colMap.get(key);
+        groupedContainer.appendChild(buildGroupSection(col, groups.get(key)));
+      });
+
+      showState('grouped');
+    }
+
+    // ─── Main ─────────────────────────────────────────────
+    async function init() {
+      const slug = new URLSearchParams(window.location.search).get('id');
+
+      if (!slug) {
+        collectionName.textContent = 'Wishlist';
+        showState('not-found');
+        updateMeta('Wishlist not found — Vacuole', 'This wishlist link is invalid or has been removed.', '');
+        return;
+      }
+
+      try {
+        // 1. Fetch share record
+        const shareRows = await supaFetch(
+          `shared_wishlists?public_slug=eq.${encodeURIComponent(slug)}&is_active=eq.true&select=*`
+        );
+
+        if (!shareRows || shareRows.length === 0) {
+          collectionName.textContent = 'Wishlist';
+          showState('not-found');
+          updateMeta('Wishlist not found — Vacuole', 'This wishlist link is invalid or has been removed.', '');
+          return;
+        }
+
+        const share          = shareRows[0];
+        const ownerRaw       = share.owner_name || '';
+        const displayName    = ownerRaw
+          ? ownerRaw.charAt(0).toUpperCase() + ownerRaw.slice(1)
+          : 'Someone';
+        const isFullWishlist = share.collection_id === null;
+
+        // 2. Increment view count (fire and forget)
+        supaFetch(
+          `shared_wishlists?public_slug=eq.${encodeURIComponent(slug)}`,
+          { method: 'PATCH', headers: { 'Prefer': 'return=minimal' },
+            body: JSON.stringify({ view_count: (share.view_count || 0) + 1 }) }
+        ).catch(() => {});
+
+        if (isFullWishlist) {
+          // ── Full wishlist share ──────────────────────────
+          collectionDot.style.display  = 'none';
+          collectionName.textContent   = `${displayName}'s Wishlist`;
+
+          // Fetch all items + collections in parallel
+          const [items, collections] = await Promise.all([
+            supaFetch(`wishlists?user_id=eq.${encodeURIComponent(share.user_id)}&select=title,url,image,domain,price,collection_id&order=saved_at.desc`),
+            supaFetch(`collections?user_id=eq.${encodeURIComponent(share.user_id)}&select=id,name,color&order=created_at.asc`).catch(() => [])
+          ]);
+
+          const count = items ? items.length : 0;
+          headerMeta.textContent = `${count} item${count !== 1 ? 's' : ''}`;
+
+          const firstImage = (items || []).find(i => i.image)?.image || '';
+          updateMeta(
+            `${displayName}'s Wishlist — Vacuole`,
+            `${count} curated product${count !== 1 ? 's' : ''} saved with Vacuole`,
+            firstImage
+          );
+
+          renderGrouped(items, collections || []);
+
+        } else {
+          // ── Single collection share ──────────────────────
+          let colName = 'Wishlist', colColor = '#B8C4B0';
+          try {
+            const colRows = await supaFetch(
+              `collections?id=eq.${encodeURIComponent(share.collection_id)}&select=name,color`
+            );
+            if (colRows && colRows.length) {
+              colName  = colRows[0].name  || colName;
+              colColor = colRows[0].color || colColor;
+            }
+          } catch {}
+
+          collectionDot.style.background = colColor;
+          collectionName.textContent     = `${displayName}'s ${colName}`;
+
+          const items = await supaFetch(
+            `wishlists?user_id=eq.${encodeURIComponent(share.user_id)}&collection_id=eq.${encodeURIComponent(share.collection_id)}&select=title,url,image,domain,price&order=saved_at.desc`
+          );
+
+          const count = items ? items.length : 0;
+          headerMeta.textContent = `${count} item${count !== 1 ? 's' : ''}`;
+
+          const firstImage = (items || []).find(i => i.image)?.image || '';
+          updateMeta(
+            `${displayName}'s ${colName} — Vacuole`,
+            `${count} curated product${count !== 1 ? 's' : ''} saved with Vacuole`,
+            firstImage
+          );
+
+          if (!items || items.length === 0) { showState('empty'); return; }
+          items.forEach(item => itemsGrid.appendChild(buildCard(item)));
+          showState('items');
+        }
+
+      } catch (err) {
+        console.error('Vacuole share error:', err);
+        collectionName.textContent = 'Wishlist';
+        showState('error');
+        updateMeta('Wishlist — Vacuole', 'Something went wrong loading this wishlist.', '');
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

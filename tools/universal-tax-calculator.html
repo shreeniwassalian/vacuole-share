@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Tax Calculator — Free Tool by Vacuole</title>
+  <meta name="description" content="Free universal tax calculator. Instantly compute sales tax, VAT, or GST for 30+ countries. Enter any price and tax rate and see the final price, tax amount, and breakdown.">
+  <meta property="og:title" content="Universal Tax Calculator — Free Tool by Vacuole">
+  <meta property="og:description" content="Calculate sales tax, VAT, or GST for 30+ countries instantly. Free, no signup required.">
+  <style>
+    :root {
+      --bg: #E8E3D0;
+      --bg-card: #F2EDE0;
+      --text: #2C2C2A;
+      --text-sub: #6A6A5A;
+      --accent: #B8C4B0;
+      --accent-dark: #4A6741;
+      --btn: #2C2C2A;
+      --btn-text: #E8E3D0;
+      --border: rgba(184,196,176,0.4);
+      --shadow: 0 2px 12px rgba(44,44,42,0.08);
+      --radius: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .top-bar { height: 3px; background: var(--accent); width: 100%; }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-sub);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--btn);
+      color: var(--btn-text);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 64px 24px 48px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .tool-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-sub);
+      line-height: 1.6;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ── Tool Card ── */
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      max-width: 680px;
+      margin: 0 auto 48px;
+      box-shadow: var(--shadow);
+    }
+
+    /* ── Mode tabs ── */
+    .calc-tabs {
+      display: flex;
+      border-bottom: 1.5px solid var(--border);
+      margin: -36px -36px 28px;
+      padding: 0 36px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .calc-tabs::-webkit-scrollbar { display: none; }
+
+    .calc-tab {
+      padding: 15px 0;
+      margin-right: 28px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-sub);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1.5px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+      font-family: inherit;
+    }
+
+    .calc-tab:last-child { margin-right: 0; }
+    .calc-tab:hover { color: var(--text); }
+
+    .calc-tab.active {
+      color: var(--text);
+      font-weight: 600;
+      border-bottom-color: var(--accent-dark);
+    }
+
+    /* ── Inputs ── */
+    .input-group { margin-bottom: 20px; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: 0.2px;
+    }
+
+    .label-sub {
+      font-weight: 400;
+      color: var(--text-sub);
+      margin-left: 6px;
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="number"]:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(184,196,176,0.25);
+    }
+
+    input::placeholder { color: #AAAAA0; }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; }
+
+    /* select arrow */
+    .select-wrapper { position: relative; }
+
+    .select-wrapper::after {
+      content: '▼';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      color: var(--text-sub);
+      pointer-events: none;
+    }
+
+    .select-wrapper select { padding-right: 36px; cursor: pointer; }
+
+    /* input with prefix */
+    .input-wrapper { display: flex; align-items: stretch; }
+
+    .input-prefix {
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-right: none;
+      border-radius: var(--radius) 0 0 var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+      white-space: nowrap;
+      min-width: 42px;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .input-wrapper input { border-radius: 0 var(--radius) var(--radius) 0; }
+
+    /* input with suffix */
+    .input-suffix-wrap { display: flex; align-items: stretch; }
+
+    .input-suffix-wrap input { border-radius: var(--radius) 0 0 var(--radius); }
+
+    .input-suffix {
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-left: none;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* 2-column row */
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .input-row .input-group { margin-bottom: 0; }
+
+    /* ── Results ── */
+    .results-section {
+      display: none;
+      margin-top: 28px;
+    }
+
+    .results-section.visible { display: block; }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .result-stat {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 14px;
+      text-align: center;
+    }
+
+    .result-stat.highlight {
+      border-color: var(--accent);
+      background: white;
+    }
+
+    .result-stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .result-stat-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      word-break: break-all;
+    }
+
+    .result-stat.highlight .result-stat-value { color: var(--accent-dark); }
+
+    /* meta row */
+    .result-meta {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .result-meta-item {
+      flex: 1;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .result-meta-label { font-size: 12px; color: var(--text-sub); }
+    .result-meta-value { font-size: 13px; font-weight: 600; color: var(--text); }
+
+    /* Bar */
+    .bar-wrap {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+
+    .bar-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .bar-track {
+      height: 10px;
+      background: rgba(184,196,176,0.2);
+      border-radius: 99px;
+      overflow: hidden;
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .bar-base {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 99px 0 0 99px;
+      transition: width 0.4s ease;
+    }
+
+    .bar-tax {
+      height: 100%;
+      background: var(--accent-dark);
+      border-radius: 0 99px 99px 0;
+      transition: width 0.4s ease;
+    }
+
+    .bar-legend {
+      display: flex;
+      gap: 20px;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .legend-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+
+    .calc-note {
+      font-size: 11.5px;
+      color: var(--text-sub);
+      line-height: 1.5;
+      padding: 12px 14px;
+      background: var(--bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── How it works ── */
+    .how-section {
+      max-width: 680px;
+      margin: 0 auto 64px;
+      padding: 0 24px;
+    }
+
+    .how-section h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .step {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      color: var(--text);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      margin: 0 auto 12px;
+    }
+
+    .step h3 { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    .step p { font-size: 12px; color: var(--text-sub); line-height: 1.5; }
+
+    /* ── FAQ ── */
+    .faq-section {
+      max-width: 680px;
+      margin: 0 auto 64px;
+      padding: 0 24px;
+    }
+
+    .faq-section .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; }
+
+    .faq-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+      transition: background 0.2s;
+      background: white;
+    }
+
+    .faq-question:hover { background: var(--bg); }
+
+    .faq-toggle {
+      transition: transform 0.2s ease;
+      font-size: 12px;
+      color: var(--text-sub);
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
+
+    .faq-toggle.open { transform: rotate(180deg); }
+
+    .faq-answer {
+      padding: 0 1.5rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      color: var(--text-sub);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .faq-answer.open { padding: 1.5rem; max-height: 400px; }
+
+    /* ── Conversion Banner ── */
+    .conversion-banner {
+      background: var(--btn);
+      color: var(--btn-text);
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    .conversion-banner h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+
+    .conversion-banner p {
+      font-size: 14px;
+      opacity: 0.75;
+      margin-bottom: 20px;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .conversion-banner a {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--text);
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .conversion-banner a:hover { opacity: 0.85; }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 24px 48px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    footer a { color: var(--text-sub); text-decoration: none; margin: 0 12px; }
+    footer a:hover { color: var(--text); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .hero h1 { font-size: 1.85rem; }
+      .hero { padding: 48px 20px 36px; }
+      .tool-card { padding: 24px 18px; margin: 0 16px 48px; }
+      .calc-tabs { margin: -24px -18px 24px; padding: 0 18px; }
+      .input-row { grid-template-columns: 1fr; gap: 0; margin-bottom: 0; }
+      .input-row .input-group { margin-bottom: 20px; }
+      .results-grid { grid-template-columns: 1fr 1fr; }
+      .result-meta { flex-direction: column; gap: 8px; }
+      .steps { grid-template-columns: 1fr; }
+      footer { padding: 20px; }
+    }
+
+    @media (max-width: 400px) {
+      .results-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar"></div>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Vacuole</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#features">Features</a></li>
+      <li><a href="../index.html#pricing">Pricing</a></li>
+      <li><a href="./affiliate-generator.html" style="color: var(--text);">Tools</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Add to Chrome — It's Free</a>
+  </nav>
+
+  <div class="hero">
+    <span class="tool-badge">Free Tool</span>
+    <h1>Universal Tax Calculator</h1>
+    <p>Instantly compute sales tax, VAT, GST, or any custom rate for 30+ countries. Simple, fast, always free.</p>
+  </div>
+
+  <div class="tool-card" style="margin: 0 auto 32px;">
+
+    <!-- Mode tabs -->
+    <div class="calc-tabs">
+      <button class="calc-tab active" data-mode="add">Add Tax to Price</button>
+      <button class="calc-tab" data-mode="extract">Extract Tax from Total</button>
+      <button class="calc-tab" data-mode="custom">Custom Rate</button>
+    </div>
+
+    <!-- Country -->
+    <div class="input-group" id="countryGroup">
+      <label>Country / Region <span class="label-sub">auto-fills the rate</span></label>
+      <div class="select-wrapper">
+        <select id="countrySelect">
+          <option value="" disabled selected>Select a country…</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Amount + Rate -->
+    <div class="input-row">
+      <div class="input-group">
+        <label id="amountLabel">Price <span class="label-sub">before tax</span></label>
+        <div class="input-wrapper">
+          <span class="input-prefix" id="currencyIcon">$</span>
+          <input type="number" id="amountInput" placeholder="0.00" min="0" step="0.01" />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Tax Rate</label>
+        <div class="input-suffix-wrap">
+          <input type="number" id="rateInput" placeholder="e.g. 18" min="0" max="100" step="0.01" />
+          <span class="input-suffix">% tax</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-section" id="resultsSection">
+
+      <div class="results-grid">
+        <div class="result-stat highlight">
+          <div class="result-stat-label" id="totalLabel">Total (incl. tax)</div>
+          <div class="result-stat-value" id="totalValue">—</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-label" id="baseStatLabel">Base price</div>
+          <div class="result-stat-value" id="baseValue">—</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-label">Tax amount</div>
+          <div class="result-stat-value" id="taxValue">—</div>
+        </div>
+      </div>
+
+      <div class="result-meta">
+        <div class="result-meta-item">
+          <span class="result-meta-label">Effective rate</span>
+          <span class="result-meta-value" id="effectiveRate">—</span>
+        </div>
+        <div class="result-meta-item">
+          <span class="result-meta-label">Tax type</span>
+          <span class="result-meta-value" id="taxTypeValue">—</span>
+        </div>
+      </div>
+
+      <div class="bar-wrap">
+        <div class="bar-label">Base vs Tax breakdown</div>
+        <div class="bar-track">
+          <div class="bar-base" id="barBase" style="width: 0%;"></div>
+          <div class="bar-tax" id="barTax" style="width: 0%;"></div>
+        </div>
+        <div class="bar-legend">
+          <span><span class="legend-dot" style="background: var(--accent);"></span>Base <strong id="legendBase">0%</strong></span>
+          <span><span class="legend-dot" style="background: var(--accent-dark);"></span>Tax <strong id="legendTax">0%</strong></span>
+        </div>
+      </div>
+
+      <p class="calc-note">Tax rates are updated periodically. Always verify with your local tax authority for official filings or compliance.</p>
+
+    </div>
+
+  </div>
+
+  <!-- How it works -->
+  <div class="how-section">
+    <h2>How to use this calculator</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Choose a mode</h3>
+        <p>Add tax to a net price, extract the tax from a gross total, or use any custom rate</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Select your country</h3>
+        <p>Pick from 30+ countries and the standard VAT, GST, or sales tax rate fills in automatically</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>See the breakdown</h3>
+        <p>Instantly see the total, tax amount, effective rate, and a visual base-vs-tax split</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <h2 class="section-title">Frequently asked questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        What is the difference between VAT, GST, and Sales Tax?
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <p>VAT (Value Added Tax) is charged at every stage of production and collected incrementally. GST (Goods &amp; Services Tax) is similar but often replaces multiple indirect taxes with a single levy. Sales Tax is typically applied only at the final point of sale to the consumer.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        Can I use this for US state-level taxes?
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <p>Yes — select "United States" for a baseline federal rate, then adjust the rate field manually to match your state and local rate. For example, California charges about 7.25% state tax, but combined local rates can be higher. The Custom Rate mode lets you enter any percentage freely.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        What does "Extract Tax from Total" mode do?
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <p>If you already paid a tax-inclusive price and want to know how much was tax, use Extract mode. Enter the total amount you paid, select the applicable tax rate, and the calculator will reverse-engineer the base price and exact tax amount for you.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        How accurate are the pre-filled tax rates?
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <p>We maintain standard national rates for 30+ countries and update them periodically. Local or state-level rates can vary — always confirm with your tax authority for official filings or business compliance purposes.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFAQ(this)">
+        Is this calculator free to use?
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <p>Completely free, forever. No account needed, no limits. We build these tools to help shoppers make smarter decisions — and to complement our wishlist Chrome extension.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conversion-banner">
+    <h3>Know the real cost before you buy.</h3>
+    <p>Vacuole tracks prices across all your favourite shopping sites so you always know when to buy — and exactly how much you're paying.</p>
+    <a href="#">Add Vacuole to Chrome — Free</a>
+  </div>
+
+  <footer>
+    <a href="../index.html">Home</a>
+    <a href="../index.html#pricing">Pricing</a>
+    <a href="./affiliate-generator.html">Tools</a>
+    <span style="margin-left: 12px;">Made with ❤️ in India · © 2025 Vacuole</span>
+  </footer>
+
+  <script>
+    // ── COUNTRY DATA ──────────────────────────────────────────────────────────
+    const countries = [
+      { name: "United States",  code: "US", rate: 7.25, type: "Sales Tax",       currency: "$"   },
+      { name: "United Kingdom", code: "GB", rate: 20,   type: "VAT",             currency: "£"   },
+      { name: "Germany",        code: "DE", rate: 19,   type: "VAT",             currency: "€"   },
+      { name: "France",         code: "FR", rate: 20,   type: "VAT",             currency: "€"   },
+      { name: "Italy",          code: "IT", rate: 22,   type: "VAT",             currency: "€"   },
+      { name: "Spain",          code: "ES", rate: 21,   type: "VAT",             currency: "€"   },
+      { name: "Netherlands",    code: "NL", rate: 21,   type: "VAT",             currency: "€"   },
+      { name: "Belgium",        code: "BE", rate: 21,   type: "VAT",             currency: "€"   },
+      { name: "Austria",        code: "AT", rate: 20,   type: "VAT",             currency: "€"   },
+      { name: "Portugal",       code: "PT", rate: 23,   type: "VAT",             currency: "€"   },
+      { name: "Ireland",        code: "IE", rate: 23,   type: "VAT",             currency: "€"   },
+      { name: "Sweden",         code: "SE", rate: 25,   type: "VAT",             currency: "kr"  },
+      { name: "Denmark",        code: "DK", rate: 25,   type: "VAT",             currency: "kr"  },
+      { name: "Norway",         code: "NO", rate: 25,   type: "VAT",             currency: "kr"  },
+      { name: "Finland",        code: "FI", rate: 25.5, type: "VAT",             currency: "€"   },
+      { name: "Poland",         code: "PL", rate: 23,   type: "VAT",             currency: "zł"  },
+      { name: "Switzerland",    code: "CH", rate: 8.1,  type: "VAT",             currency: "CHF" },
+      { name: "Canada",         code: "CA", rate: 5,    type: "GST",             currency: "$"   },
+      { name: "Australia",      code: "AU", rate: 10,   type: "GST",             currency: "$"   },
+      { name: "New Zealand",    code: "NZ", rate: 15,   type: "GST",             currency: "$"   },
+      { name: "India",          code: "IN", rate: 18,   type: "GST",             currency: "₹"   },
+      { name: "Japan",          code: "JP", rate: 10,   type: "Consumption Tax", currency: "¥"   },
+      { name: "South Korea",    code: "KR", rate: 10,   type: "VAT",             currency: "₩"   },
+      { name: "China",          code: "CN", rate: 13,   type: "VAT",             currency: "¥"   },
+      { name: "Singapore",      code: "SG", rate: 9,    type: "GST",             currency: "$"   },
+      { name: "Mexico",         code: "MX", rate: 16,   type: "IVA",             currency: "$"   },
+      { name: "Brazil",         code: "BR", rate: 17,   type: "ICMS",            currency: "R$"  },
+      { name: "South Africa",   code: "ZA", rate: 15,   type: "VAT",             currency: "R"   },
+      { name: "UAE",            code: "AE", rate: 5,    type: "VAT",             currency: "AED" },
+      { name: "Saudi Arabia",   code: "SA", rate: 15,   type: "VAT",             currency: "SAR" },
+      { name: "Turkey",         code: "TR", rate: 20,   type: "KDV",             currency: "₺"   },
+      { name: "Thailand",       code: "TH", rate: 7,    type: "VAT",             currency: "฿"   },
+      { name: "Malaysia",       code: "MY", rate: 8,    type: "SST",             currency: "RM"  },
+      { name: "Philippines",    code: "PH", rate: 12,   type: "VAT",             currency: "₱"   },
+      { name: "Indonesia",      code: "ID", rate: 11,   type: "PPN",             currency: "Rp"  },
+      { name: "Russia",         code: "RU", rate: 20,   type: "VAT",             currency: "₽"   },
+    ].sort((a, b) => a.name.localeCompare(b.name));
+
+    // ── STATE ─────────────────────────────────────────────────────────────────
+    let currentMode = 'add';
+    let selectedCountry = null;
+
+    // ── DOM REFS ──────────────────────────────────────────────────────────────
+    const countrySelect  = document.getElementById('countrySelect');
+    const amountInput    = document.getElementById('amountInput');
+    const rateInput      = document.getElementById('rateInput');
+    const currencyIcon   = document.getElementById('currencyIcon');
+    const amountLabel    = document.getElementById('amountLabel');
+    const countryGroup   = document.getElementById('countryGroup');
+    const resultsSection = document.getElementById('resultsSection');
+
+    // ── POPULATE COUNTRIES ────────────────────────────────────────────────────
+    countries.forEach(function(c) {
+      const opt = document.createElement('option');
+      opt.value = c.code;
+      opt.textContent = c.name + ' — ' + c.rate + '% ' + c.type;
+      countrySelect.appendChild(opt);
+    });
+
+    // ── MODE TABS ─────────────────────────────────────────────────────────────
+    document.querySelectorAll('.calc-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        document.querySelector('.calc-tab.active').classList.remove('active');
+        tab.classList.add('active');
+        currentMode = tab.dataset.mode;
+
+        const isCustom  = currentMode === 'custom';
+        const isExtract = currentMode === 'extract';
+
+        // Show/hide country selector
+        countryGroup.style.display = isCustom ? 'none' : '';
+
+        // Update labels
+        amountLabel.innerHTML = isExtract
+          ? 'Total <span class="label-sub">incl. tax</span>'
+          : 'Price <span class="label-sub">before tax</span>';
+
+        document.getElementById('totalLabel').textContent    = isExtract ? 'Base price (excl. tax)' : 'Total (incl. tax)';
+        document.getElementById('baseStatLabel').textContent = isExtract ? 'Your input (total)'      : 'Base price';
+
+        if (isCustom) {
+          currencyIcon.textContent = '$';
+          rateInput.value = '';
+        }
+
+        calculate();
+      });
+    });
+
+    // ── COUNTRY CHANGE ────────────────────────────────────────────────────────
+    countrySelect.addEventListener('change', function() {
+      selectedCountry = countries.find(function(c) { return c.code === countrySelect.value; });
+      if (selectedCountry && currentMode !== 'custom') {
+        rateInput.value = selectedCountry.rate;
+        currencyIcon.textContent = selectedCountry.currency;
+      }
+      calculate();
+    });
+
+    // ── LIVE CALCULATE ────────────────────────────────────────────────────────
+    amountInput.addEventListener('input', calculate);
+    rateInput.addEventListener('input', calculate);
+
+    function calculate() {
+      const amount = parseFloat(amountInput.value) || 0;
+      const rate   = parseFloat(rateInput.value)   || 0;
+      const sym    = currencyIcon.textContent;
+
+      if (amount === 0) {
+        resultsSection.classList.remove('visible');
+        return;
+      }
+
+      let base, tax, total;
+
+      if (currentMode === 'extract') {
+        total = amount;
+        base  = amount / (1 + rate / 100);
+        tax   = total - base;
+      } else {
+        base  = amount;
+        tax   = base * (rate / 100);
+        total = base + tax;
+      }
+
+      const effective    = base > 0 ? (tax / base * 100) : 0;
+      const displayTotal = currentMode === 'extract' ? base  : total;
+      const displayBase  = currentMode === 'extract' ? total : base;
+
+      const taxType = (selectedCountry && currentMode !== 'custom')
+        ? selectedCountry.type
+        : (rate > 0 ? 'Custom' : '—');
+
+      const basePct = total > 0 ? (base / total * 100) : 0;
+      const taxPct  = total > 0 ? (tax  / total * 100) : 0;
+
+      document.getElementById('totalValue').textContent    = fmt(displayTotal, sym);
+      document.getElementById('baseValue').textContent     = fmt(displayBase, sym);
+      document.getElementById('taxValue').textContent      = fmt(tax, sym);
+      document.getElementById('effectiveRate').textContent = effective.toFixed(2) + '%';
+      document.getElementById('taxTypeValue').textContent  = taxType;
+      document.getElementById('barBase').style.width       = basePct.toFixed(1) + '%';
+      document.getElementById('barTax').style.width        = taxPct.toFixed(1) + '%';
+      document.getElementById('legendBase').textContent    = basePct.toFixed(1) + '%';
+      document.getElementById('legendTax').textContent     = taxPct.toFixed(1) + '%';
+
+      resultsSection.classList.add('visible');
+    }
+
+    function fmt(value, symbol) {
+      const num = value.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return symbol + num;
+    }
+
+    // ── FAQ ACCORDION ─────────────────────────────────────────────────────────
+    function toggleFAQ(el) {
+      const answer = el.nextElementSibling;
+      const toggle = el.querySelector('.faq-toggle');
+      answer.classList.toggle('open');
+      toggle.classList.toggle('open');
+    }
+
+    // ── DEFAULT: INDIA ────────────────────────────────────────────────────────
+    (function setDefault() {
+      const india = countries.find(function(c) { return c.code === 'IN'; });
+      if (india) {
+        countrySelect.value       = 'IN';
+        selectedCountry           = india;
+        rateInput.value           = india.rate;
+        currencyIcon.textContent  = india.currency;
+      }
+    })();
+  </script>
+
+</body>
+</html>
