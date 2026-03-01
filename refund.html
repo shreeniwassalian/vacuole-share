@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund Policy — Vacuole</title>
+  <style>
+    :root {
+      --cream: #E8E3D0;
+      --card:  #F2EDE0;
+      --sage:  #B8C4B0;
+      --charcoal: #2C2C2A;
+      --text-light: #555550;
+      --border: #D4CFBE;
+      --shadow: 0 2px 8px rgba(44,44,42,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.7;
+      border-top: 3px solid var(--sage);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(232,227,208,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-brand {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-home {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-home:hover { color: var(--charcoal); }
+
+    .legal-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    .legal-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--sage);
+    }
+
+    .legal-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.4rem;
+    }
+
+    .last-updated {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .legal-section {
+      margin-bottom: 2rem;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      border: 1px solid var(--border);
+    }
+
+    .legal-section h2 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--charcoal);
+    }
+
+    .legal-section p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 0.6rem;
+    }
+    .legal-section p:last-child { margin-bottom: 0; }
+
+    .legal-section ul {
+      list-style: none;
+      margin: 0.5rem 0;
+    }
+    .legal-section ul li {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      padding: 0.25rem 0;
+      padding-left: 1.1rem;
+      position: relative;
+    }
+    .legal-section ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--sage);
+    }
+
+    .legal-section a { color: var(--charcoal); font-weight: 500; }
+
+    .highlight-box {
+      background: var(--cream);
+      border-left: 3px solid var(--sage);
+      border-radius: 0 8px 8px 0;
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    /* Pricing cards */
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .price-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+    }
+
+    .price-card .plan-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+      margin-bottom: 0.3rem;
+    }
+
+    .price-card .plan-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    .price-card .plan-period {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .price-card .plan-saving {
+      display: inline-block;
+      margin-top: 0.4rem;
+      font-size: 0.78rem;
+      background: var(--sage);
+      color: var(--charcoal);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Timeline */
+    .timeline {
+      margin: 0.75rem 0;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .timeline-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--sage);
+      color: var(--charcoal);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .timeline-content p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .timeline-content strong {
+      color: var(--charcoal);
+    }
+
+    footer {
+      background: var(--charcoal);
+      color: #A8A89A;
+      padding: 2.5rem 2rem;
+      margin-top: 2rem;
+    }
+
+    .footer-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .footer-brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+    }
+
+    .footer-links a {
+      color: #A8A89A;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover, .footer-links a.active { color: var(--cream); }
+
+    .footer-copy { font-size: 0.8rem; color: #6A6A5A; }
+
+    @media (max-width: 600px) {
+      .legal-wrap { padding: 2rem 1rem 3rem; }
+      .legal-header h1 { font-size: 1.6rem; }
+      .legal-section { padding: 1.25rem 1.25rem; }
+      .pricing-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-brand">Vacuole</a>
+    <a href="index.html" class="nav-home">← Home</a>
+  </nav>
+
+  <div class="legal-wrap">
+
+    <div class="legal-header">
+      <h1>Refund Policy</h1>
+      <p class="last-updated">Last updated: March 1, 2026</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>The short version</h2>
+      <div class="highlight-box">
+        We offer a 7-day money-back guarantee on all Pro subscriptions. If you're not happy within 7 days of purchase, email us and we'll refund you — no questions asked.
+      </div>
+    </div>
+
+    <div class="legal-section">
+      <h2>1. Pro Subscription Pricing</h2>
+      <p>Vacuole Pro is available on two billing cycles:</p>
+      <div class="pricing-cards">
+        <div class="price-card">
+          <div class="plan-name">Monthly</div>
+          <div class="plan-price">₹149</div>
+          <div class="plan-period">per month</div>
+        </div>
+        <div class="price-card">
+          <div class="plan-name">Annual</div>
+          <div class="plan-price">₹999</div>
+          <div class="plan-period">per year</div>
+          <div class="plan-saving">Save ₹789/year</div>
+        </div>
+      </div>
+      <p>Subscriptions renew automatically. You'll receive a reminder email before renewal.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>2. 7-Day Money-Back Guarantee</h2>
+      <p>If you're not satisfied with Vacuole Pro for any reason, you can request a full refund within <strong>7 days</strong> of your purchase date.</p>
+      <p>To request a refund:</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot">1</div>
+          <div class="timeline-content">
+            <p>Email <strong><a href="mailto:support@getvacuole.com">support@getvacuole.com</a></strong> within 7 days of purchase</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2</div>
+          <div class="timeline-content">
+            <p>Use the subject line <strong>"Refund Request"</strong> and include your account email</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">3</div>
+          <div class="timeline-content">
+            <p>We'll process your refund within <strong>5–7 business days</strong></p>
+          </div>
+        </div>
+      </div>
+      <p>Refunds are returned to the original payment method.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>3. After the 7-Day Window</h2>
+      <p>Refunds are not available after the 7-day window has passed. However:</p>
+      <ul>
+        <li>You keep full Pro access until the end of your current billing period</li>
+        <li>You can cancel at any time to prevent future charges</li>
+        <li>We do not offer partial refunds for unused time within a billing period</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h2>4. Cancellation</h2>
+      <p>You can cancel your Pro subscription at any time — there are no cancellation fees.</p>
+      <ul>
+        <li>Cancel from your account settings in the extension</li>
+        <li>After cancelling, you keep Pro features until the end of your paid period</li>
+        <li>Your account reverts to the Free plan automatically after expiry</li>
+        <li>Your saved wishlist data is retained — you are not charged for any new period</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h2>5. Renewal Refunds</h2>
+      <p>If your subscription renews and you did not intend to renew, please contact us within <strong>48 hours</strong> of the charge at <a href="mailto:support@getvacuole.com">support@getvacuole.com</a>. We'll evaluate these on a case-by-case basis and aim to resolve them quickly.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>6. Disputes</h2>
+      <p>If you have a billing issue or dispute, please reach out to us first — we aim to resolve all concerns within <strong>48 hours</strong>.</p>
+      <ul>
+        <li>General &amp; billing: <a href="mailto:support@getvacuole.com">support@getvacuole.com</a></li>
+        <li>Payment-specific issues: <a href="mailto:billing@getvacuole.com">billing@getvacuole.com</a></li>
+      </ul>
+      <p>We'd much rather resolve things directly than through a payment dispute. If we can't reach an agreement, disputes are governed by the laws of India with jurisdiction in Pune, Maharashtra.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-brand">Vacuole</a>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="refund.html" class="active">Refund Policy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <p class="footer-copy">© 2026 Vacuole. All rights reserved. Made in India 🇮🇳</p>
+    </div>
+  </footer>
+
+</body>
+</html>

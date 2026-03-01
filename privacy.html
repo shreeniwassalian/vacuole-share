@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Vacuole</title>
+  <style>
+    :root {
+      --cream: #E8E3D0;
+      --card:  #F2EDE0;
+      --sage:  #B8C4B0;
+      --charcoal: #2C2C2A;
+      --text-light: #555550;
+      --border: #D4CFBE;
+      --shadow: 0 2px 8px rgba(44,44,42,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.7;
+      border-top: 3px solid var(--sage);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(232,227,208,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-brand {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-home {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-home:hover { color: var(--charcoal); }
+
+    .legal-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    .legal-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--sage);
+    }
+
+    .legal-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.4rem;
+    }
+
+    .last-updated {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .legal-section {
+      margin-bottom: 2rem;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      border: 1px solid var(--border);
+    }
+
+    .legal-section h2 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--charcoal);
+    }
+
+    .legal-section p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 0.6rem;
+    }
+    .legal-section p:last-child { margin-bottom: 0; }
+
+    .legal-section ul {
+      list-style: none;
+      margin: 0.5rem 0;
+    }
+    .legal-section ul li {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      padding: 0.25rem 0;
+      padding-left: 1.1rem;
+      position: relative;
+    }
+    .legal-section ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--sage);
+    }
+
+    .legal-section a { color: var(--charcoal); font-weight: 500; }
+
+    .highlight-box {
+      background: var(--cream);
+      border-left: 3px solid var(--sage);
+      border-radius: 0 8px 8px 0;
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.75rem 0;
+      font-size: 0.9rem;
+    }
+    .data-table th {
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 0.5rem 0.75rem;
+      color: var(--text-light);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+
+    .affiliate-badge {
+      display: inline-block;
+      background: var(--sage);
+      color: var(--charcoal);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    footer {
+      background: var(--charcoal);
+      color: #A8A89A;
+      padding: 2.5rem 2rem;
+      margin-top: 2rem;
+    }
+
+    .footer-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .footer-brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+    }
+
+    .footer-links a {
+      color: #A8A89A;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover, .footer-links a.active { color: var(--cream); }
+
+    .footer-copy { font-size: 0.8rem; color: #6A6A5A; }
+
+    @media (max-width: 600px) {
+      .legal-wrap { padding: 2rem 1rem 3rem; }
+      .legal-header h1 { font-size: 1.6rem; }
+      .legal-section { padding: 1.25rem 1.25rem; }
+      .data-table { font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-brand">Vacuole</a>
+    <a href="index.html" class="nav-home">← Home</a>
+  </nav>
+
+  <div class="legal-wrap">
+
+    <div class="legal-header">
+      <h1>Privacy Policy</h1>
+      <p class="last-updated">Last updated: March 1, 2026</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>The short version</h2>
+      <div class="highlight-box">
+        We collect only what we need to run Vacuole. We never sell your data. You can delete your account and all your data at any time.
+      </div>
+    </div>
+
+    <div class="legal-section">
+      <h2>1. Information We Collect</h2>
+      <p>We collect the following information when you use Vacuole:</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>Data type</th><th>What it includes</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Account info</td>
+            <td>Email address</td>
+            <td>To create and identify your account</td>
+          </tr>
+          <tr>
+            <td>Wishlist data</td>
+            <td>Product titles, URLs, prices, images you save</td>
+            <td>To power your wishlist</td>
+          </tr>
+          <tr>
+            <td>Collections &amp; notes</td>
+            <td>Collection names, colours, item notes</td>
+            <td>To organise your wishlist</td>
+          </tr>
+          <tr>
+            <td>Price history</td>
+            <td>Historical prices of saved items</td>
+            <td>To detect price drops and send alerts</td>
+          </tr>
+          <tr>
+            <td>Usage data</td>
+            <td>When items were saved</td>
+            <td>To show date saved in your list</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>We do <strong>not</strong> collect your browsing history, track which sites you visit, or read any page content beyond what you explicitly save.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>2. How We Use Your Information</h2>
+      <ul>
+        <li>To operate and improve the Vacuole service</li>
+        <li>To send price drop email alerts when a saved item's price decreases (Pro feature — you can disable these)</li>
+        <li>To respond to support requests</li>
+        <li>To maintain the security and integrity of the service</li>
+      </ul>
+      <p>We <strong>never</strong> sell, rent, or share your personal data with third parties for advertising or marketing purposes.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>3. Data Storage &amp; Security</h2>
+      <p>Your data is stored on <strong>Supabase</strong>, a managed PostgreSQL database hosted on AWS infrastructure. Supabase provides:</p>
+      <ul>
+        <li>Encryption at rest (AES-256)</li>
+        <li>Encryption in transit (TLS/HTTPS)</li>
+        <li>Row-level security so only you can access your data</li>
+      </ul>
+      <p>Your password is never stored in plain text. Authentication tokens are stored locally in your browser using <code>chrome.storage.local</code>.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>4. Amazon Affiliate Disclosure</h2>
+      <span class="affiliate-badge">Affiliate Disclosure</span>
+      <p>Vacuole is a participant in the <strong>Amazon Associates Programme</strong>. When you save an Amazon product, the saved URL may include our affiliate tag (<code>vacuole-21</code>).</p>
+      <p>If you purchase a product through an Amazon link saved in Vacuole, we may earn a small commission from Amazon. <strong>This does not affect the price you pay</strong> — Amazon products are priced the same regardless of how you arrive at the page.</p>
+      <p>This commission helps fund the development and maintenance of Vacuole.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>5. Cookies &amp; Local Storage</h2>
+      <p>The Vacuole Chrome extension uses <code>chrome.storage.local</code> to store your session token locally on your device. This is not a browser cookie and is not accessible to websites you visit.</p>
+      <p>We do <strong>not</strong> use tracking cookies, advertising cookies, or third-party analytics on the extension or this website.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>6. Sharing Your Data</h2>
+      <p>We do not share your personal data with third parties except in these limited cases:</p>
+      <ul>
+        <li><strong>Supabase</strong> — our database infrastructure provider, who processes data on our behalf</li>
+        <li><strong>Legal requirements</strong> — if required by law, court order, or government authority</li>
+      </ul>
+      <p>Shared wishlists (Pro feature) display only the items and collection names you choose to share — never your email address.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>7. Your Rights</h2>
+      <p>You have the right to:</p>
+      <ul>
+        <li><strong>Access</strong> — view all the data we hold about you</li>
+        <li><strong>Export</strong> — download your wishlist as a PDF or spreadsheet (Pro feature)</li>
+        <li><strong>Delete</strong> — delete your account and all associated data at any time from the extension settings. Data is removed from our systems within 30 days.</li>
+        <li><strong>Opt out of emails</strong> — unsubscribe from price alert emails at any time</li>
+      </ul>
+      <p>To exercise any of these rights, email us at <a href="mailto:support@getvacuole.com">support@getvacuole.com</a></p>
+    </div>
+
+    <div class="legal-section">
+      <h2>8. Children's Privacy</h2>
+      <p>Vacuole is not directed at children under 13. We do not knowingly collect personal data from children. If you believe a child has provided us data, please contact us and we will delete it promptly.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>9. Changes to This Policy</h2>
+      <p>We may update this privacy policy from time to time. We'll update the "Last updated" date when we do. For significant changes, we'll notify you by email. Continued use of Vacuole after changes means you accept the updated policy.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>10. Contact Us</h2>
+      <p>For any privacy-related questions or concerns, contact us at <a href="mailto:support@getvacuole.com">support@getvacuole.com</a></p>
+      <p>We're based in Pune, Maharashtra, India.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-brand">Vacuole</a>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html" class="active">Privacy Policy</a>
+        <a href="refund.html">Refund Policy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <p class="footer-copy">© 2026 Vacuole. All rights reserved. Made in India 🇮🇳</p>
+    </div>
+  </footer>
+
+</body>
+</html>

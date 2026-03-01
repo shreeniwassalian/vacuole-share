@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — Vacuole</title>
+  <style>
+    :root {
+      --cream: #E8E3D0;
+      --card:  #F2EDE0;
+      --sage:  #B8C4B0;
+      --charcoal: #2C2C2A;
+      --text-light: #555550;
+      --border: #D4CFBE;
+      --shadow: 0 2px 8px rgba(44,44,42,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.7;
+      border-top: 3px solid var(--sage);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(232,227,208,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-brand {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-home {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-home:hover { color: var(--charcoal); }
+
+    .page-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    .page-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--sage);
+    }
+
+    .page-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.4rem;
+    }
+
+    .page-header p {
+      font-size: 1rem;
+      color: var(--text-light);
+    }
+
+    /* Two-column layout on desktop */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    /* Info cards */
+    .info-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .info-item h3 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-light);
+      margin-bottom: 0.3rem;
+    }
+
+    .info-item p,
+    .info-item a {
+      font-size: 0.95rem;
+      color: var(--charcoal);
+      text-decoration: none;
+      font-weight: 500;
+      word-break: break-all;
+    }
+
+    .info-item a:hover {
+      text-decoration: underline;
+    }
+
+    .info-item .sub {
+      font-size: 0.82rem;
+      color: var(--text-light);
+      font-weight: 400;
+      margin-top: 0.15rem;
+    }
+
+    .response-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--sage);
+      color: var(--charcoal);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Form */
+    .form-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+    }
+
+    .form-card h2 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--charcoal);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #A8A898;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    /* Custom select arrow */
+    .select-wrap {
+      position: relative;
+    }
+    .select-wrap::after {
+      content: '▾';
+      position: absolute;
+      right: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      pointer-events: none;
+      font-size: 0.85rem;
+    }
+    .select-wrap select {
+      padding-right: 2.2rem;
+      cursor: pointer;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 0.85rem 1.5rem;
+      background: var(--charcoal);
+      color: white;
+      border: 2px solid var(--charcoal);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 0.25rem;
+    }
+
+    .submit-btn:hover {
+      background: transparent;
+      color: var(--charcoal);
+    }
+
+    .form-note {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      text-align: center;
+      margin-top: 0.75rem;
+    }
+
+    footer {
+      background: var(--charcoal);
+      color: #A8A89A;
+      padding: 2.5rem 2rem;
+      margin-top: 2rem;
+    }
+
+    .footer-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .footer-brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+    }
+
+    .footer-links a {
+      color: #A8A89A;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover, .footer-links a.active { color: var(--cream); }
+
+    .footer-copy { font-size: 0.8rem; color: #6A6A5A; }
+
+    @media (max-width: 640px) {
+      .page-wrap { padding: 2rem 1rem 3rem; }
+      .page-header h1 { font-size: 1.6rem; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-card { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-brand">Vacuole</a>
+    <a href="index.html" class="nav-home">← Home</a>
+  </nav>
+
+  <div class="page-wrap">
+
+    <div class="page-header">
+      <h1>Contact Us</h1>
+      <p>We typically respond within 24–48 hours on weekdays.</p>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- Left: info -->
+      <div class="info-card">
+
+        <div class="info-item">
+          <div class="response-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            24–48 hr response
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="info-item">
+          <h3>General Support</h3>
+          <a href="mailto:support@getvacuole.com">support@getvacuole.com</a>
+          <p class="sub">Questions, bugs, feature requests</p>
+        </div>
+
+        <div class="info-item">
+          <h3>Billing</h3>
+          <a href="mailto:billing@getvacuole.com">billing@getvacuole.com</a>
+          <p class="sub">Payments, refunds, subscription issues</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="info-item">
+          <h3>Location</h3>
+          <p>Pune, Maharashtra</p>
+          <p class="sub">India 🇮🇳</p>
+        </div>
+
+        <div class="info-item">
+          <h3>Business Hours</h3>
+          <p>Mon – Fri</p>
+          <p class="sub">10:00 AM – 6:00 PM IST</p>
+        </div>
+
+      </div>
+
+      <!-- Right: form -->
+      <div class="form-card">
+        <h2>Send us a message</h2>
+
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Rahul Sharma" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <div class="select-wrap">
+              <select id="subject" name="subject" required>
+                <option value="" disabled selected>Select a topic…</option>
+                <option value="General Inquiry">General Inquiry</option>
+                <option value="Billing">Billing &amp; Payments</option>
+                <option value="Technical Support">Technical Support</option>
+                <option value="Feature Request">Feature Request</option>
+                <option value="Refund Request">Refund Request</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Describe your issue or question in detail…" required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Send Message →</button>
+        </form>
+
+        <p class="form-note">This opens your email client with the message pre-filled.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-brand">Vacuole</a>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="refund.html">Refund Policy</a>
+        <a href="contact.html" class="active">Contact</a>
+      </div>
+      <p class="footer-copy">© 2026 Vacuole. All rights reserved. Made in India 🇮🇳</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name    = document.getElementById('name').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value.trim();
+
+      if (!name || !email || !subject || !message) return;
+
+      const to   = subject === 'Billing' || subject === 'Refund Request'
+        ? 'billing@getvacuole.com'
+        : 'support@getvacuole.com';
+
+      const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+
+      const mailto = `mailto:${to}`
+        + `?subject=${encodeURIComponent('[Vacuole] ' + subject)}`
+        + `&body=${encodeURIComponent(body)}`;
+
+      window.location.href = mailto;
+    });
+  </script>
+
+</body>
+</html>

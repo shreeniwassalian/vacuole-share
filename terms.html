@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service — Vacuole</title>
+  <style>
+    :root {
+      --cream: #E8E3D0;
+      --card:  #F2EDE0;
+      --sage:  #B8C4B0;
+      --charcoal: #2C2C2A;
+      --text-light: #555550;
+      --border: #D4CFBE;
+      --shadow: 0 2px 8px rgba(44,44,42,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.7;
+      border-top: 3px solid var(--sage);
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(232,227,208,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-brand {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-home {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-home:hover { color: var(--charcoal); }
+
+    /* ── Page layout ── */
+    .legal-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    .legal-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--sage);
+    }
+
+    .legal-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.4rem;
+    }
+
+    .last-updated {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    /* ── Sections ── */
+    .legal-section {
+      margin-bottom: 2rem;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      border: 1px solid var(--border);
+    }
+
+    .legal-section h2 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--charcoal);
+    }
+
+    .legal-section p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 0.6rem;
+    }
+    .legal-section p:last-child { margin-bottom: 0; }
+
+    .legal-section ul {
+      list-style: none;
+      margin: 0.5rem 0;
+    }
+    .legal-section ul li {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      padding: 0.25rem 0;
+      padding-left: 1.1rem;
+      position: relative;
+    }
+    .legal-section ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--sage);
+    }
+
+    .legal-section a {
+      color: var(--charcoal);
+      font-weight: 500;
+    }
+
+    .highlight-box {
+      background: var(--cream);
+      border-left: 3px solid var(--sage);
+      border-radius: 0 8px 8px 0;
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--charcoal);
+      color: #A8A89A;
+      padding: 2.5rem 2rem;
+      margin-top: 2rem;
+    }
+
+    .footer-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .footer-brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+    }
+
+    .footer-links a {
+      color: #A8A89A;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover, .footer-links a.active { color: var(--cream); }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: #6A6A5A;
+    }
+
+    @media (max-width: 600px) {
+      .legal-wrap { padding: 2rem 1rem 3rem; }
+      .legal-header h1 { font-size: 1.6rem; }
+      .legal-section { padding: 1.25rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-brand">Vacuole</a>
+    <a href="index.html" class="nav-home">← Home</a>
+  </nav>
+
+  <div class="legal-wrap">
+
+    <div class="legal-header">
+      <h1>Terms of Service</h1>
+      <p class="last-updated">Last updated: March 1, 2026</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>1. Acceptance of Terms</h2>
+      <p>By installing the Vacuole Chrome extension or creating an account on getvacuole.com, you agree to these Terms of Service. If you do not agree, please do not use Vacuole.</p>
+      <p>These terms apply to all users — free and Pro alike.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>2. Description of Service</h2>
+      <p>Vacuole is a Chrome extension that lets you save products from any shopping website into a personal wishlist. Features include:</p>
+      <ul>
+        <li>Saving product title, price, image, and URL from any page</li>
+        <li>Organising saved items into collections</li>
+        <li>Adding notes to saved items</li>
+        <li>Price drop alerts via email (Pro)</li>
+        <li>Sharing wishlists with others (Pro)</li>
+        <li>Exporting your wishlist as PDF or spreadsheet (Pro)</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h2>3. User Accounts</h2>
+      <p>You must create an account with a valid email address to use Vacuole. You are responsible for:</p>
+      <ul>
+        <li>Keeping your password confidential</li>
+        <li>All activity that occurs under your account</li>
+        <li>Notifying us immediately if you suspect unauthorised access</li>
+      </ul>
+      <p>We do not store your password in plain text. Authentication is handled securely via Supabase.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>4. Free and Pro Plans</h2>
+      <p><strong>Free plan:</strong> Save up to 30 items, basic wishlist and collection features.</p>
+      <p><strong>Pro plan:</strong> Unlimited items, price drop alerts, share links, PDF/spreadsheet export.</p>
+      <div class="highlight-box">
+        Pro is available at ₹149/month or ₹999/year. Pricing may change with 30 days' notice to existing subscribers.
+      </div>
+    </div>
+
+    <div class="legal-section">
+      <h2>5. Prohibited Uses</h2>
+      <p>You may not use Vacuole to:</p>
+      <ul>
+        <li>Scrape, harvest, or extract data from third-party websites at scale</li>
+        <li>Attempt to reverse-engineer, decompile, or copy Vacuole's source code</li>
+        <li>Abuse or overload our infrastructure (e.g. automated mass saves)</li>
+        <li>Use the service for any unlawful purpose</li>
+        <li>Impersonate others or create fake accounts</li>
+        <li>Resell or sublicense access to Vacuole</li>
+      </ul>
+      <p>Violations may result in immediate account suspension without refund.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>6. Price Data Disclaimer</h2>
+      <p>Prices displayed in Vacuole are captured at the time you save a product and may become outdated. Price drop alerts are based on automated checks that may not always succeed.</p>
+      <div class="highlight-box">
+        Always verify the current price on the merchant's website before making a purchase. Vacuole is not responsible for any purchase decisions made based on displayed prices.
+      </div>
+      <p>We are Amazon Associates. Amazon product links may include our affiliate tag. We earn a small commission on qualifying purchases — this does not affect the price you pay.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>7. Intellectual Property</h2>
+      <p>Vacuole — including the Chrome extension, website, branding, and underlying technology — is owned by us. You may not copy, modify, or distribute any part of it without written permission.</p>
+      <p>Content you save (product titles, images, URLs) remains the property of the respective merchants and is stored solely for your personal wishlist use.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>8. Termination</h2>
+      <p>We may suspend or terminate your account if you violate these terms, abuse the service, or if required by law. You may delete your account at any time.</p>
+      <p>Upon termination, your data will be deleted from our systems within 30 days, except where retention is required by law.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>9. Limitation of Liability</h2>
+      <p>Vacuole is provided "as is" without warranties of any kind. To the maximum extent permitted by applicable law, we are not liable for any indirect, incidental, or consequential damages arising from your use of the service.</p>
+      <p>Our total liability to you shall not exceed the amount you paid us in the 3 months prior to the claim.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>10. Changes to Terms</h2>
+      <p>We may update these terms occasionally. When we do, we'll update the "Last updated" date above. For significant changes, we'll notify you by email. Continued use of Vacuole after changes means you accept the new terms.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>11. Governing Law</h2>
+      <p>These terms are governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of courts in Pune, Maharashtra, India.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>12. Contact</h2>
+      <p>Questions about these terms? Reach us at <a href="mailto:support@getvacuole.com">support@getvacuole.com</a></p>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-brand">Vacuole</a>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="terms.html" class="active">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="refund.html">Refund Policy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <p class="footer-copy">© 2026 Vacuole. All rights reserved. Made in India 🇮🇳</p>
+    </div>
+  </footer>
+
+</body>
+</html>
