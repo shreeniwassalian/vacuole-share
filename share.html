@@ -724,12 +724,19 @@
           return;
         }
 
-        const share          = shareRows[0];
-        const ownerRaw       = share.owner_name || '';
-        const displayName    = ownerRaw
+        const share = shareRows[0];
+
+        // Fetch fresh username from profiles (public read policy required).
+        // Priority: profiles.username > share.owner_name > 'Someone'
+        const profileRows = await supaFetch(
+          `profiles?id=eq.${encodeURIComponent(share.user_id)}&select=username`
+        ).catch(() => []);
+        const profileUsername = profileRows?.[0]?.username || null;
+        const ownerRaw        = profileUsername || share.owner_name || '';
+        const displayName     = ownerRaw
           ? ownerRaw.charAt(0).toUpperCase() + ownerRaw.slice(1)
           : 'Someone';
-        const isFullWishlist = share.collection_id === null;
+        const isFullWishlist  = share.collection_id === null;
 
         // 2. Increment view count (fire and forget)
         supaFetch(
