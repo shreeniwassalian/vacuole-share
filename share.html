@@ -358,6 +358,8 @@
       margin-bottom: 2.5rem;
     }
 
+    /* .group-section transition is defined in the SEARCH BAR block above */
+
     .group-header {
       display: flex;
       align-items: center;
@@ -407,6 +409,70 @@
     @media (max-width: 560px) {
       .group-grid { grid-template-columns: 1fr; }
     }
+
+    /* ─── SEARCH BAR ─────────────────────────────────── */
+    .search-wrap {
+      position: relative;
+      margin-bottom: 1.75rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.65rem 2.5rem 0.65rem 2.5rem;
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      background: var(--card);
+      color: var(--charcoal);
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .search-input:focus { border-color: var(--sage); }
+
+    .search-input::placeholder { color: var(--text-light); }
+
+    .search-icon {
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.85rem;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 0.65rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0.2rem 0.3rem;
+      display: none;
+    }
+
+    .search-clear:hover { color: var(--charcoal); }
+
+    .search-no-results {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      padding: 2.5rem 0;
+      display: none;
+    }
+
+    .group-section {
+      transition: opacity 0.15s ease;
+    }
+
+    .group-section.hidden-by-search { display: none; }
 
     /* ─── HIDDEN ─────────────────────────────────────── */
     .hidden { display: none !important; }
@@ -672,11 +738,11 @@
     }
 
     // ─── Render grouped wishlist (full-wishlist share) ────
-    function renderGrouped(items, collections) {
+    function renderGrouped(items, colList) {
       if (!items || items.length === 0) { showState('empty'); return; }
 
       const colMap = new Map();
-      (collections || []).forEach(c => colMap.set(c.id, c));
+      (colList || []).forEach(c => colMap.set(c.id, c));
 
       // Group items by collection_id
       const groups = new Map();
@@ -686,15 +752,86 @@
         groups.get(key).push(item);
       });
 
-      // Render named collections in their saved order, then uncategorized last
+      // Build ordered keys:
+      //   1. Named collections in DB order (from colList)
+      //   2. Any groups whose collection_id isn't in colList
+      //      (RLS may have blocked the collections fetch — items still need to show)
+      //   3. Uncategorized always last
       const orderedKeys = [];
-      (collections || []).forEach(c => { if (groups.has(c.id)) orderedKeys.push(c.id); });
+      (colList || []).forEach(c => { if (groups.has(c.id)) orderedKeys.push(c.id); });
+      groups.forEach((_, key) => {
+        if (key !== '__none__' && !orderedKeys.includes(key)) orderedKeys.push(key);
+      });
       if (groups.has('__none__')) orderedKeys.push('__none__');
 
+      // Update header meta: "X items across Y collections"
+      const totalItems  = items.length;
+      const namedGroups = orderedKeys.filter(k => k !== '__none__').length;
+      headerMeta.textContent = namedGroups > 0
+        ? `${totalItems} item${totalItems !== 1 ? 's' : ''} across ${namedGroups} collection${namedGroups !== 1 ? 's' : ''}`
+        : `${totalItems} item${totalItems !== 1 ? 's' : ''}`;
+
+      // Clear container and inject search bar
       groupedContainer.innerHTML = '';
+
+      const searchWrap  = document.createElement('div');
+      searchWrap.className = 'search-wrap';
+
+      const searchIcon  = document.createElement('span');
+      searchIcon.className   = 'search-icon';
+      searchIcon.textContent = '🔍';
+
+      const searchInput = document.createElement('input');
+      searchInput.type        = 'text';
+      searchInput.className   = 'search-input';
+      searchInput.placeholder = 'Search collections…';
+      searchInput.setAttribute('autocomplete', 'off');
+
+      const searchClear = document.createElement('button');
+      searchClear.className   = 'search-clear';
+      searchClear.textContent = '×';
+      searchClear.setAttribute('aria-label', 'Clear search');
+
+      searchWrap.appendChild(searchIcon);
+      searchWrap.appendChild(searchInput);
+      searchWrap.appendChild(searchClear);
+      groupedContainer.appendChild(searchWrap);
+
+      const noResults = document.createElement('p');
+      noResults.className = 'search-no-results';
+      noResults.textContent = 'No matching collections';
+      groupedContainer.appendChild(noResults);
+
+      // Build and append each group section
+      const sections = [];
       orderedKeys.forEach(key => {
-        const col = key === '__none__' ? null : colMap.get(key);
-        groupedContainer.appendChild(buildGroupSection(col, groups.get(key)));
+        const col     = key === '__none__' ? null : colMap.get(key);
+        const section = buildGroupSection(col, groups.get(key));
+        groupedContainer.appendChild(section);
+        sections.push({
+          el:   section,
+          name: (col ? col.name : 'Uncategorized').toLowerCase()
+        });
+      });
+
+      // Search handler
+      function applySearch() {
+        const q = searchInput.value.trim().toLowerCase();
+        searchClear.style.display = q ? 'block' : 'none';
+        let visible = 0;
+        sections.forEach(({ el, name }) => {
+          const match = !q || name.includes(q);
+          el.classList.toggle('hidden-by-search', !match);
+          if (match) visible++;
+        });
+        noResults.style.display = (q && visible === 0) ? 'block' : 'none';
+      }
+
+      searchInput.addEventListener('input', applySearch);
+      searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        applySearch();
+        searchInput.focus();
       });
 
       showState('grouped');
@@ -756,9 +893,7 @@
             supaFetch(`collections?user_id=eq.${encodeURIComponent(share.user_id)}&select=id,name,color&order=created_at.asc`).catch(() => [])
           ]);
 
-          const count = items ? items.length : 0;
-          headerMeta.textContent = `${count} item${count !== 1 ? 's' : ''}`;
-
+          const count      = (items || []).length;
           const firstImage = (items || []).find(i => i.image)?.image || '';
           updateMeta(
             `${displayName}'s Wishlist — Vacuole`,
@@ -766,6 +901,7 @@
             firstImage
           );
 
+          // renderGrouped sets headerMeta to "X items across Y collections"
           renderGrouped(items, collections || []);
 
         } else {
